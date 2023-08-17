@@ -51,7 +51,7 @@ on:
 env:
   PROJECT_ID: ck-t20-sense # TODO: update Google Cloud project id
   GAR_LOCATION: us-east1 # TODO: update Artifact Registry location
-  SERVICE: t20prod # TODO: update Cloud Run service name
+  SERVICE: t20-dev # TODO: update Cloud Run service name
   REGION: us-east1 # TODO: update Cloud Run service region
 
 jobs:
