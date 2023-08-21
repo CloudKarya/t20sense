@@ -1,0 +1,3 @@
+docker build . -t  us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_prod
+docker push us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_prod
+gcloud run deploy t20prod  --image us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_prod --port 8000
