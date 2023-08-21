@@ -16,6 +16,7 @@ load_dotenv()
 # Access environment variables
 ENVIRONMENT = os.getenv("ENVIRONMENT")
 API_KEY = os.getenv("API_KEY")
+BUCKET_NAME = os.getenv("BUCKET_NAME")
 
 all_series_ids = [313494, 374163, 418064, 466304, 520932, 586733, 695871, 791129, 968923, 1078425, 1131611, 1165643, 1210595, 1249214, 1298423, 1345038]
 
@@ -33,7 +34,7 @@ def set_cloud_bucket_env():
   client = storage.Client()
 
   # Specify the bucket name and CSV file path
-  bucket_name = 'match_data'
+  bucket_name = BUCKET_NAME
 
   # Access the bucket
   bucket = client.get_bucket(bucket_name)
