@@ -44,7 +44,7 @@
               <a class="nav-link" href="#">ODI WC</a>
             </li> -->
             <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">MLC</a>
+              <a class="nav-link" href="/mlc">MLC</a>
             </li>
           </ul>
           <!-- Search Bar -->
@@ -116,9 +116,6 @@
 
         {% if batting1 and bowling1 %}
         <div class="border rounded text-wrap p-2" style="background-color: #ffffff;">
-          <div class="row">
-
-          </div>
           <p class="fw-bold my-1">{{match_title}}, {{match_date}}, {{ground_info}}</p>
           <p class="my-1">{{toss_info}}</p>
           <p class="my-1 fw-bold">Man of the Match - {{man_of_the_match}}</p>  <!-- Man of the match -->
@@ -135,6 +132,12 @@
           <p class="fw-bold my-1" style="margin-block-end: 0;">Best Performances in Bowling</p>
           <p class="my-1">{{bst_perf_bowl_inn1}}</p>
           <p class="my-1">{{bst_perf_bowl_inn2}}</p>
+        </div>
+
+        <div class="border rounded mt-2 p-2" style="background-color: #ffffff;">
+          <p class="fw-bold my-1" style="margin-block-end: 0;">Team Squads</p>
+          <p class="my-1"><strong> {{team1_name}}</strong>  : {{squad1}}</p>
+          <p class="my-1"><strong> {{team2_name}}</strong>  : {{squad2}}</p>
         </div>
         
         <!-- 1st Innings -->
