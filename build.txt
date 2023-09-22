@@ -1,3 +1,13 @@
 docker build . -t  us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_prod
 docker push us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_prod
 gcloud run deploy t20prod  --image us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_prod --port 8000
+
+
+# DEV Build
+#docker build . -t  us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_dev
+
+#docker run -p 8000:8000 -e API_KEY='t20-sense-8f218a81848c.json' -e BUCKET_NAME='t20sense-dev' us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_dev
+
+#docker push us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_dev
+
+#gcloud run deploy t20dev  --image us-east1-docker.pkg.dev/ck-t20-sense/t20sense/t20_dev --port 8000 --set-env-vars=API_KEY='t20-sense-8f218a81848c.json',BUCKET_NAME='t20sense-dev'
