@@ -3,21 +3,21 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from starlette.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
-import pandas as pd
+import pandas as pd, traceback
 
 # Load .env variables into the environment
 from dotenv import load_dotenv
 load_dotenv()
 
-from ipl_func import get_particular_match_whole_score, get_match_info, get_all_csv_files_from_cloud, get_team_name_score_ground, get_graphical_stats_from_each_ball_data
+from ipl_func import get_particular_match_whole_score, get_match_info, get_team_name_score_ground, get_graphical_stats_from_each_ball_data
 from functionality import get_match_ids_from_series_fast
-from stats import get_man_of_the_match, get_best_shots, fun_best_bowl_peformance, batting_impact_points, bowlers_impact_points, get_ptnship, runs_in_ovs_fig,division_of_runs,DNB
+from stats import get_man_of_the_match, get_best_shots, fun_best_bowl_peformance, batting_impact_points, bowlers_impact_points, get_ptnship, runs_in_ovs_fig,division_of_runs,DNB,team_squads
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-all_ipl_series_info = get_all_csv_files_from_cloud()
+# all_ipl_series_info = get_all_csv_files_from_cloud()
 matches_names_and_ids_dict = {}
 
 all_ipl_series_ids = {1345038: 2023, 1298423: 2022, 1249214: 2021, 1210595: 2020, 1165643: 2019, 1131611: 2018, 1078425: 2017, 968923: 2016, 791129: 2015, 695871: 2014, 586733: 2013, 520932: 2012, 466304: 2011, 418064: 2010, 374163: 2009, 313494: 2008} # Generate a list of years from 2008 to 2023
@@ -32,6 +32,12 @@ def index(request: Request):
   finals_and_champs_df = pd.read_csv('Finals.csv')
   finals_and_champs_df = finals_and_champs_df.to_dict(orient='records')
   return templates.TemplateResponse("index.html", {"request": request, "years": all_ipl_series_ids, "match_ids": match_ids, "finals_and_champs_df":finals_and_champs_df})
+
+@app.get("/mlc", response_class=HTMLResponse)
+def mlc_home(request: Request):
+  mlc_years = {1357742 : 2023}
+  match_ids = ["Select the Match"]  # Example match IDs
+  return templates.TemplateResponse("index.html", {"request": request, "years": mlc_years, "match_ids": match_ids})
 
 @app.post("/redirect_to_scorecard")
 def submit_form(series_id: int = Form(...), match_id: int = Form(...)):
@@ -116,6 +122,8 @@ async def process(
     i1_runs,i2_runs=division_of_runs(series_id,match_id)
 
     dnb1,dnb2 = DNB(series_id,match_id)
+
+    squad1,squad2 = team_squads(series_id,match_id)
     
     return templates.TemplateResponse("index.html", {   "selected_year": series_id, "selected_match_id": match_id,
                               "request": request, "years" : all_ipl_series_ids, "match_ids" : match_ids,
@@ -134,9 +142,10 @@ async def process(
                               "ptnr_f1" : ptnr_f1, "ptnr_f2" : ptnr_f2,
                               "i1_runs" : i1_runs, "i2_runs" : i2_runs,
                               "dnb1" : dnb1, "dnb2" : dnb2,
+                              "squad1" : squad1, "squad2" : squad2,
                               "i1_ov_runs": i1_ovs_runs, "i2_ov_runs": i2_ovs_runs,
                               "each_team_cumulative_score_per_over" : line_plot_cumulative_team_score_graph_base64 })
   except Exception as e:
-    print(e)
+    traceback.print_exc()
     return templates.TemplateResponse('error_pages/no_scorecard.html', {"request": request})
 
