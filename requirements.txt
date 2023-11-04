@@ -1,5 +1,4 @@
 fastapi[all]
-google
 google-cloud-storage
 google-cloud-bigquery
 numpy
@@ -7,6 +6,5 @@ pandas
 matplotlib
 requests
 ipython
-google.cloud.storage
 python-dotenv
 plotly
